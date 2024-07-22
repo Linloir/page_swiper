@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:page_swiper/page_title_filter.dart';
+import 'package:page_swiper/src/page_title_filter.dart';
 
 typedef PageContainerBuilder = Widget Function({
   required double titleFilterHeight,
