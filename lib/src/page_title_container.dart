@@ -15,11 +15,14 @@ class PageTitleContainer extends StatelessWidget {
 
   /// The required height of the title box
   final double height;
+
   /// The index of the current title,
   /// determines which page the [child] title belongs to
   final int titlePageIndex;
+
   /// The current page offset (index)
   final double currentPageIndex;
+
   /// The real title widget
   final Widget child;
 
@@ -35,11 +38,11 @@ class PageTitleContainer extends StatelessWidget {
 
   /// Get the current offset, indicates the relative position of the current
   /// title to that of a title designed to be
-  /// 
+  ///
   /// For example, if the title index is 1, say, it's on the second page,
   /// if the current page index is 1.3, then the offset should be -0.3. If
   /// the current page index is 0.9, then the offset should be +0.1.
-  /// 
+  ///
   /// The offset is clamped to [-1, 1]
   double _getOffset() {
     return (titlePageIndex - currentPageIndex).clamp(-1, 1);
@@ -48,13 +51,19 @@ class PageTitleContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: 0, left: 0, right: 0, height: height,
+      top: 0,
+      left: 0,
+      right: 0,
+      height: height,
       child: Transform.translate(
         offset: Offset(_getTranslateX(), 0),
         child: Opacity(
           opacity: _getOpacity(),
           child: SafeArea(
-            top: true, left: false, right: false, bottom: false,
+            top: true,
+            left: false,
+            right: false,
+            bottom: false,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
               child: child,

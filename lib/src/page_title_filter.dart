@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 class PageTitleFilter extends StatelessWidget {
   /// The default blur sigma value
   static const double defaultSigma = 50;
+
   /// The default title bar background color when it's collapsed
   static const Color defaultBackground = Colors.transparent;
 
@@ -18,6 +19,7 @@ class PageTitleFilter extends StatelessWidget {
 
   /// The title bar background color when it's collapsed
   final Color? background;
+
   /// The blur sigma value
   final double? sigma;
 
@@ -25,15 +27,13 @@ class PageTitleFilter extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRect(
       child: BackdropFilter(
-        filter: ImageFilter.blur(
-          sigmaX: sigma ?? defaultSigma,
-          sigmaY: sigma ?? defaultSigma,
-          tileMode: TileMode.clamp
-        ),
-        child: Container(
-          color: background ?? defaultBackground,
-        )
-      ),
+          filter: ImageFilter.blur(
+              sigmaX: sigma ?? defaultSigma,
+              sigmaY: sigma ?? defaultSigma,
+              tileMode: TileMode.clamp),
+          child: Container(
+            color: background ?? defaultBackground,
+          )),
     );
   }
 }

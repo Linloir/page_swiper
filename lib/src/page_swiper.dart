@@ -25,36 +25,46 @@ class PageSwiper extends StatefulWidget {
     required this.pages,
     required this.pageScrollControllers,
     this.blurByPage,
-  }): assert(pageNum > 0),
-    assert(pageNum == titles.length),
-    assert(pageNum == pages.length),
-    assert(pageNum == pageScrollControllers.length),
-    assert(titleHeight >= 0),
-    assert(titleHeightCollapsed >= 0);
+  })  : assert(pageNum > 0),
+        assert(pageNum == titles.length),
+        assert(pageNum == pages.length),
+        assert(pageNum == pageScrollControllers.length),
+        assert(titleHeight >= 0),
+        assert(titleHeightCollapsed >= 0);
 
   /// Total page num
   final int pageNum;
+
   /// Passing page controller inside allows the parent widget to gain
   /// control of the page switching and listen to the changes
   final PageController pageController;
+
   /// The height of the title bar in its normal state
   final double titleHeight;
+
   /// The height of the title bar in its collapsed state
   final double titleHeightCollapsed;
+
   /// The background color of the title bar when it's collapsed,
   /// defaults to Colors.transparent
   final Color? titleFilterBackground;
+
   /// The blur sigma of the title bar when it's collapsed,
   /// defaults to 50
   final double? titleFilterSigma;
+
   /// The max stretch extend of the title bar
   final double? titleMaxExtend;
+
   /// The title builders, titles should be added here using [PageTitle.builder]
   final List<PageTitleBuilder> titles;
+
   /// The page builders, pages should be added here using [PageContainer.childBuilder]
   final List<PageContainerBuilder> pages;
+
   /// The controllers corresponding for each page added in [pages]
   final List<ScrollController> pageScrollControllers;
+
   /// Whether to render the titlebar as a whole or per-page,
   /// does not make a big difference, defaults to false
   final bool? blurByPage;
@@ -90,8 +100,10 @@ class _PageSwiperState extends State<PageSwiper> {
     int rightParticipantPage = widget.pageController.page!.ceil();
     double offset = widget.pageController.page! - leftParticipantPage;
 
-    ScrollController leftParticipantPageController = widget.pageScrollControllers[leftParticipantPage];
-    ScrollController rightParticipantPageController = widget.pageScrollControllers[rightParticipantPage];
+    ScrollController leftParticipantPageController =
+        widget.pageScrollControllers[leftParticipantPage];
+    ScrollController rightParticipantPageController =
+        widget.pageScrollControllers[rightParticipantPage];
 
     double leftPageOffset = 0.0;
     if (leftParticipantPageController.hasClients) {
@@ -102,10 +114,13 @@ class _PageSwiperState extends State<PageSwiper> {
       rightPageOffset = rightParticipantPageController.offset;
     }
 
-    double leftPageHeight = max(widget.titleHeight - leftPageOffset, widget.titleHeightCollapsed);
-    double rightPageHeight = max(widget.titleHeight - rightPageOffset, widget.titleHeightCollapsed);
+    double leftPageHeight =
+        max(widget.titleHeight - leftPageOffset, widget.titleHeightCollapsed);
+    double rightPageHeight =
+        max(widget.titleHeight - rightPageOffset, widget.titleHeightCollapsed);
 
-    double currentHeight = leftPageHeight + offset * (rightPageHeight - leftPageHeight);
+    double currentHeight =
+        leftPageHeight + offset * (rightPageHeight - leftPageHeight);
 
     setState(() {
       _titleBarHeight = currentHeight;
@@ -116,7 +131,8 @@ class _PageSwiperState extends State<PageSwiper> {
   double _getTitleExtend() {
     double range = widget.titleHeight - widget.titleHeightCollapsed;
     double cur = _titleBarHeight - widget.titleHeightCollapsed;
-    return (cur / range).clamp(0, widget.titleMaxExtend ?? PageSwiper.defaultMaxExtend);
+    return (cur / range)
+        .clamp(0, widget.titleMaxExtend ?? PageSwiper.defaultMaxExtend);
   }
 
   @override
@@ -124,46 +140,48 @@ class _PageSwiperState extends State<PageSwiper> {
     double titleExtend = _getTitleExtend();
 
     return Scaffold(
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: PageView(
-              controller: widget.pageController,
-              physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-              children: [
-                for (PageContainerBuilder builder in widget.pages)
-                  builder(
-                    titleFilterHeight: _titleBarHeight,
-                    titleExtend: titleExtend,
-                    filterBackground: widget.titleFilterBackground,
-                    filterSigma: widget.titleFilterSigma,
-                    blurByPage: widget.blurByPage,
-                  )
-              ],
+        body: Stack(children: [
+      Positioned.fill(
+        child: PageView(
+          controller: widget.pageController,
+          physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics()),
+          children: [
+            for (PageContainerBuilder builder in widget.pages)
+              builder(
+                titleFilterHeight: _titleBarHeight,
+                titleExtend: titleExtend,
+                filterBackground: widget.titleFilterBackground,
+                filterSigma: widget.titleFilterSigma,
+                blurByPage: widget.blurByPage,
+              )
+          ],
+        ),
+      ),
+      if (!(widget.blurByPage ?? false))
+        Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+          height: _titleBarHeight,
+          child: Opacity(
+            opacity: (pow(1 - titleExtend, 4).toDouble()).clamp(0, 1),
+            child: PageTitleFilter(
+              background: Colors.white.withAlpha(150),
+              // sigma: widget.filterSigma,
             ),
           ),
-          if (!(widget.blurByPage ?? false))
-            Positioned(
-              top: 0, left: 0, right: 0, height: _titleBarHeight,
-              child: Opacity(
-                opacity: (pow(1 - titleExtend, 4).toDouble()).clamp(0, 1),
-                child: PageTitleFilter(
-                  background: Colors.white.withAlpha(150),
-                  // sigma: widget.filterSigma,
-                ),
-              ),
-            ),
-          for (int i = 0; i < widget.pageNum; i++)
-            PageTitleContainer(
-              height: _titleBarHeight,
-              titlePageIndex: i,
-              currentPageIndex: widget.pageController.hasClients ? 
-                widget.pageController.page ?? widget.pageController.initialPage.toDouble() :
-                widget.pageController.initialPage.toDouble(),
-              child: widget.titles[i](extent: titleExtend),
-            ),
-        ]
-      )
-    );
+        ),
+      for (int i = 0; i < widget.pageNum; i++)
+        PageTitleContainer(
+          height: _titleBarHeight,
+          titlePageIndex: i,
+          currentPageIndex: widget.pageController.hasClients
+              ? widget.pageController.page ??
+                  widget.pageController.initialPage.toDouble()
+              : widget.pageController.initialPage.toDouble(),
+          child: widget.titles[i](extent: titleExtend),
+        ),
+    ]));
   }
 }

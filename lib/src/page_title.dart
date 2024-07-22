@@ -10,34 +10,40 @@ typedef PageTitleBuilder = Widget Function({required double extent, Key? key});
 class PageTitle extends StatelessWidget {
   /// Creates a builder that use your title settings to generate a title widget
   /// under the specific context of the [PageSwiper]
-  static PageTitleBuilder builder({
-    required String title,
-    String? subtitle,
-    List<Widget> actions = const <Widget>[]
-  }) {
+  static PageTitleBuilder builder(
+      {required String title,
+      String? subtitle,
+      List<Widget> actions = const <Widget>[]}) {
     return ({required double extent, Key? key}) => PageTitle(
-      extent: extent,
-      title: title,
-      subtitle: subtitle,
-      actions: actions,
-      key: key,
-    );
+          extent: extent,
+          title: title,
+          subtitle: subtitle,
+          actions: actions,
+          key: key,
+        );
   }
 
   /// The normal-state title font size
   static const double titleFontSize = 42;
+
   /// The collapsed-state title font size
   static const double titleFontSizeCollapsed = 18;
+
   /// The normal-state title font weight
   static const FontWeight titleFontWeight = FontWeight.w900;
+
   /// The collapsed-state title font weight
   static const FontWeight titleFontWeightCollapsed = FontWeight.w600;
+
   /// The max line of title text
   static const int titleMaxLines = 1;
+
   /// The subtitle font size
   static const double subtitleFontSize = 14;
+
   /// The subtitle font weight
   static const FontWeight subtitleFontWeight = FontWeight.normal;
+
   /// The max line of subtitle text
   static const int subtitleMaxLines = 1;
 
@@ -54,16 +60,19 @@ class PageTitle extends StatelessWidget {
   /// Indicates the size of current title widget
   /// 0 indicates fully collapsed and value greater than 1 indicates an overshoot
   final double extent;
+
   /// Your title text
   final String title;
+
   /// Your subtitle text
   final String? subtitle;
+
   /// Action widgets, such as [TextButton]
   final List<Widget> actions;
 
   /// Get the current title font based on the title extent
   double _getTitleFontSize() {
-    return lerpDouble(titleFontSizeCollapsed, titleFontSize, extent)!; 
+    return lerpDouble(titleFontSizeCollapsed, titleFontSize, extent)!;
   }
 
   /// Get the current title weight based on the title extent
@@ -87,7 +96,8 @@ class PageTitle extends StatelessWidget {
     // return lerpDouble(painter.size.height + 2, 0, extent)!.clamp(0, double.infinity);
 
     // Since line height is forced to be equal to font size, lerp start will be fontsize
-    return lerpDouble(subtitleFontSize * 1.1, 0, extent)!.clamp(0, double.infinity);
+    return lerpDouble(subtitleFontSize * 1.1, 0, extent)!
+        .clamp(0, double.infinity);
   }
 
   /// Get the current subtitle opacity based on the title extent

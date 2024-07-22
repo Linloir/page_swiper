@@ -4,10 +4,7 @@ import 'package:flutter/material.dart';
 /// you should use it in [CustomScrollView.slivers]
 class PageTitlePlaceholder extends StatelessWidget {
   /// Default constructor
-  const PageTitlePlaceholder({
-    required this.height,
-    super.key
-  });
+  const PageTitlePlaceholder({required this.height, super.key});
 
   /// The normal-state height of the title bar
   final double height;
