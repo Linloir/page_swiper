@@ -16,3 +16,8 @@
 * Add documentations
 * Add example project
 * Format code
+  
+## 1.0.4
+
+* Add auto publication
+* Update example app
