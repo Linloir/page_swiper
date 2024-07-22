@@ -10,3 +10,9 @@
 
 * Change project structure
 * Fix SDK version restriction
+
+## 1.0.3
+
+* Add documentations
+* Add example project
+* Format code
