@@ -1,0 +1,20 @@
+name: page_swiper
+description: "An easy-to-use scaffold for building UI with multiple scrollable pages."
+version: 1.0.0
+homepage:
+
+environment:
+  sdk: '>=3.4.4 <4.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+# The following section is specific to Flutter packages.
+flutter:
