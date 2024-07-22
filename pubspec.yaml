@@ -2,6 +2,7 @@ name: page_swiper
 description: "An easy-to-use scaffold for building UI with multiple scrollable pages."
 version: 1.0.0
 homepage:
+repository: "https://github.com/Linloir/page_swiper"
 
 environment:
   sdk: '>=3.4.4 <4.0.0'
