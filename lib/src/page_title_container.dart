@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Container widget for page titles, provides [SafeArea] wrapper and [Padding]s
 class PageTitleContainer extends StatelessWidget {
   const PageTitleContainer({
     required this.height,
@@ -9,11 +10,17 @@ class PageTitleContainer extends StatelessWidget {
     super.key,
   });
 
+  /// Default max translation value in X axis
   static const double maxTranslation = 50;
 
+  /// The required height of the title box
   final double height;
+  /// The index of the current title,
+  /// determines which page the [child] title belongs to
   final int titlePageIndex;
+  /// The current page offset (index)
   final double currentPageIndex;
+  /// The real title widget
   final Widget child;
 
   /// Calculate the current translation based on the title index and page index

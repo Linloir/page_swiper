@@ -6,9 +6,12 @@ import 'package:page_swiper/src/page_title.dart';
 import 'package:page_swiper/src/page_title_container.dart';
 import 'package:page_swiper/src/page_title_filter.dart';
 
+/// An easy-to-use scaffold for building UI with multiple scrollable pages
 class PageSwiper extends StatefulWidget {
+  /// The default max stretch extend amount of the title bar
   static const double defaultMaxExtend = 1.2;
 
+  /// The default constructor
   const PageSwiper({
     super.key,
     required this.pageNum,
@@ -34,14 +37,26 @@ class PageSwiper extends StatefulWidget {
   /// Passing page controller inside allows the parent widget to gain
   /// control of the page switching and listen to the changes
   final PageController pageController;
+  /// The height of the title bar in its normal state
   final double titleHeight;
+  /// The height of the title bar in its collapsed state
   final double titleHeightCollapsed;
+  /// The background color of the title bar when it's collapsed,
+  /// defaults to Colors.transparent
   final Color? titleFilterBackground;
+  /// The blur sigma of the title bar when it's collapsed,
+  /// defaults to 50
   final double? titleFilterSigma;
+  /// The max stretch extend of the title bar
   final double? titleMaxExtend;
+  /// The title builders, titles should be added here using [PageTitle.builder]
   final List<PageTitleBuilder> titles;
+  /// The page builders, pages should be added here using [PageContainer.childBuilder]
   final List<PageContainerBuilder> pages;
+  /// The controllers corresponding for each page added in [pages]
   final List<ScrollController> pageScrollControllers;
+  /// Whether to render the titlebar as a whole or per-page,
+  /// does not make a big difference, defaults to false
   final bool? blurByPage;
 
   @override
@@ -65,6 +80,7 @@ class _PageSwiperState extends State<PageSwiper> {
     super.initState();
   }
 
+  /// Updates the current height of the title bar
   void _updateTitleBarHeight() {
     if (widget.pageController.page == null) {
       return;
@@ -96,6 +112,7 @@ class _PageSwiperState extends State<PageSwiper> {
     });
   }
 
+  /// Get the current title bar stretch extend by its height
   double _getTitleExtend() {
     double range = widget.titleHeight - widget.titleHeightCollapsed;
     double cur = _titleBarHeight - widget.titleHeightCollapsed;

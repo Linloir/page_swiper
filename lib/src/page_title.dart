@@ -3,9 +3,13 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+/// Builder function for generating page title widgets in a certain context
 typedef PageTitleBuilder = Widget Function({required double extent, Key? key});
 
+/// Real widget that displays the page title
 class PageTitle extends StatelessWidget {
+  /// Creates a builder that use your title settings to generate a title widget
+  /// under the specific context of the [PageSwiper]
   static PageTitleBuilder builder({
     required String title,
     String? subtitle,
@@ -20,15 +24,25 @@ class PageTitle extends StatelessWidget {
     );
   }
 
+  /// The normal-state title font size
   static const double titleFontSize = 42;
+  /// The collapsed-state title font size
   static const double titleFontSizeCollapsed = 18;
+  /// The normal-state title font weight
   static const FontWeight titleFontWeight = FontWeight.w900;
+  /// The collapsed-state title font weight
   static const FontWeight titleFontWeightCollapsed = FontWeight.w600;
+  /// The max line of title text
   static const int titleMaxLines = 1;
+  /// The subtitle font size
   static const double subtitleFontSize = 14;
+  /// The subtitle font weight
   static const FontWeight subtitleFontWeight = FontWeight.normal;
+  /// The max line of subtitle text
   static const int subtitleMaxLines = 1;
 
+  /// Default constructor, you shall not be using this to construct your title widget,
+  /// instead use the [PageTitle.builder] method
   const PageTitle({
     required this.extent,
     required this.title,
@@ -40,18 +54,24 @@ class PageTitle extends StatelessWidget {
   /// Indicates the size of current title widget
   /// 0 indicates fully collapsed and value greater than 1 indicates an overshoot
   final double extent;
+  /// Your title text
   final String title;
+  /// Your subtitle text
   final String? subtitle;
+  /// Action widgets, such as [TextButton]
   final List<Widget> actions;
 
+  /// Get the current title font based on the title extent
   double _getTitleFontSize() {
     return lerpDouble(titleFontSizeCollapsed, titleFontSize, extent)!; 
   }
 
+  /// Get the current title weight based on the title extent
   FontWeight _getTitleFontWeight() {
     return FontWeight.lerp(titleFontWeightCollapsed, titleFontWeight, extent)!;
   }
 
+  /// Get the current subtitle wrapper container height based on the title extent
   double _getSubtitleContainerHeight() {
     if (subtitle == null) {
       return 0;
@@ -70,6 +90,7 @@ class PageTitle extends StatelessWidget {
     return lerpDouble(subtitleFontSize * 1.1, 0, extent)!.clamp(0, double.infinity);
   }
 
+  /// Get the current subtitle opacity based on the title extent
   double _getSubtitleContainerOpacity() {
     if (subtitle == null) {
       return 0;
@@ -78,6 +99,7 @@ class PageTitle extends StatelessWidget {
     return lerpDouble(1.0, 0.0, extent)!.clamp(0, 1);
   }
 
+  /// Get the current Y axis alignment value based on the title extent
   double _getAlignmentY() {
     if (extent > 1) {
       return 1;
