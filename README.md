@@ -26,7 +26,7 @@ The package provides a `PageSwiper` widget by which you can create a horizontal-
 TL,DR;
 This is a package that provides API for implementing UI designs as below:
 
-![example gif](demo/example.gif)
+![example gif](https://raw.githubusercontent.com/Linloir/page_swiper/main/demo/example.gif)
 
 ## Getting started
 
